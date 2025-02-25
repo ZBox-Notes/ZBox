@@ -1,11 +1,12 @@
 package main
 
 import (
+	"backend/api/notes"
 	"backend/api/users"
 	database "backend/db/postgres"
+	middleware "backend/middleware"
 	model "backend/models/generated_model"
 	"context"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -22,22 +23,18 @@ func main() {
 	// Instantiate services
 	queries := model.New(conn.DB)
 	userService := users.NewService(queries)
+	notesService := notes.NewService(queries)
 
 	// Register handlers
 	r := mux.NewRouter()
 	userService.RegisterHandlers(r)
+	notesService.RegisterHandlers(r)
 
 	// Add middleware
-	r.Use(loggingMiddleware)
+	r.Use(middleware.LoggingMiddleware)
+	r.Use(middleware.AuthMiddleware)
 
 	// Start the server
 	http.Handle("/", r)
 	http.ListenAndServe(":3000", nil)
-}
-
-func loggingMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.Method, r.URL)
-		next.ServeHTTP(w, r)
-	})
 }

@@ -1,4 +1,4 @@
-package users
+package notes
 
 import (
 	"backend/middleware"
@@ -21,42 +21,42 @@ func NewService(queries *models.Queries) *Service {
 }
 
 func (s *Service) RegisterHandlers(router *mux.Router) {
-	sr := router.PathPrefix("/users").Subrouter()
-	sr.Use(middleware.UserValidatorMiddleware)
-	sr.HandleFunc("", s.ListUsers).Methods("GET")
-	sr.HandleFunc("", s.CreateUser).Methods("POST")
-	sr.HandleFunc("/{id}", s.GetUser).Methods("GET")
-	sr.HandleFunc("/{id}", s.UpdateUser).Methods("PUT")
-	sr.HandleFunc("/{id}", s.DeleteUser).Methods("DELETE")
+	sr := router.PathPrefix("/notes").Subrouter()
+	sr.Use(middleware.NoteValidatorMiddleware)
+	sr.HandleFunc("", s.ListNotes).Methods("GET")
+	sr.HandleFunc("", s.CreateNote).Methods("POST")
+	sr.HandleFunc("/{id}", s.GetNote).Methods("GET")
+	sr.HandleFunc("/{id}", s.UpdateNote).Methods("PUT")
+	sr.HandleFunc("/{id}", s.DeleteNote).Methods("DELETE")
 }
 
-func (s *Service) ListUsers(w http.ResponseWriter, r *http.Request) {
+func (s *Service) ListNotes(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	users, err := s.queries.ListUsers(ctx)
+	notes, err := s.queries.ListNotes(ctx)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(notes)
 }
 
-func (s *Service) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) CreateNote(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	var params models.CreateUserParams
+	var params models.CreateNoteParams
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	user, err := s.queries.CreateUser(ctx, params)
+	note, err := s.queries.CreateNote(ctx, params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(note)
 }
 
-func (s *Service) GetUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) GetNote(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -64,15 +64,15 @@ func (s *Service) GetUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	user, err := s.queries.UserById(ctx, int32(id))
+	note, err := s.queries.NoteById(ctx, int32(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(note)
 }
 
-func (s *Service) UpdateUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) UpdateNote(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -80,22 +80,22 @@ func (s *Service) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	var params models.UpdateUserParams
+	var params models.UpdateNoteParams
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	params.ID = int32(id)
-	user, err := s.queries.UpdateUser(ctx, params)
+	note, err := s.queries.UpdateNote(ctx, params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(note)
 }
 
-func (s *Service) DeleteUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) DeleteNote(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -103,10 +103,9 @@ func (s *Service) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	err := s.queries.DeleteUser(ctx, int32(id))
+	err := s.queries.DeleteNote(ctx, int32(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
 }

@@ -1,4 +1,4 @@
-package users
+package boxes
 
 import (
 	"backend/middleware"
@@ -21,42 +21,42 @@ func NewService(queries *models.Queries) *Service {
 }
 
 func (s *Service) RegisterHandlers(router *mux.Router) {
-	sr := router.PathPrefix("/users").Subrouter()
-	sr.Use(middleware.UserValidatorMiddleware)
-	sr.HandleFunc("", s.ListUsers).Methods("GET")
-	sr.HandleFunc("", s.CreateUser).Methods("POST")
-	sr.HandleFunc("/{id}", s.GetUser).Methods("GET")
-	sr.HandleFunc("/{id}", s.UpdateUser).Methods("PUT")
-	sr.HandleFunc("/{id}", s.DeleteUser).Methods("DELETE")
+	sr := router.PathPrefix("/boxes").Subrouter()
+	sr.Use(middleware.BoxValidatorMiddleware)
+	sr.HandleFunc("", s.ListBoxes).Methods("GET")
+	sr.HandleFunc("", s.CreateBox).Methods("POST")
+	sr.HandleFunc("/{id}", s.GetBox).Methods("GET")
+	sr.HandleFunc("/{id}", s.UpdateBox).Methods("PUT")
+	sr.HandleFunc("/{id}", s.DeleteBox).Methods("DELETE")
 }
 
-func (s *Service) ListUsers(w http.ResponseWriter, r *http.Request) {
+func (s *Service) ListBoxes(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	users, err := s.queries.ListUsers(ctx)
+	boxes, err := s.queries.ListBoxes(ctx)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(boxes)
 }
 
-func (s *Service) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) CreateBox(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	var params models.CreateUserParams
+	var params models.CreateBoxParams
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	user, err := s.queries.CreateUser(ctx, params)
+	box, err := s.queries.CreateBox(ctx, params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(box)
 }
 
-func (s *Service) GetUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) GetBox(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -64,15 +64,15 @@ func (s *Service) GetUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	user, err := s.queries.UserById(ctx, int32(id))
+	box, err := s.queries.BoxById(ctx, int32(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(box)
 }
 
-func (s *Service) UpdateUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) UpdateBox(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -80,22 +80,22 @@ func (s *Service) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	var params models.UpdateUserParams
+	var params models.UpdateBoxParams
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	params.ID = int32(id)
-	user, err := s.queries.UpdateUser(ctx, params)
+	box, err := s.queries.UpdateBox(ctx, params)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+	json.NewEncoder(w).Encode(box)
 }
 
-func (s *Service) DeleteUser(w http.ResponseWriter, r *http.Request) {
+func (s *Service) DeleteBox(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	idStr := mux.Vars(r)["id"]
 	id, parseIntErr := strconv.ParseInt(idStr, 10, 32)
@@ -103,10 +103,9 @@ func (s *Service) DeleteUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, parseIntErr.Error(), http.StatusBadRequest)
 		return
 	}
-	err := s.queries.DeleteUser(ctx, int32(id))
+	err := s.queries.DeleteBox(ctx, int32(id))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
 }
