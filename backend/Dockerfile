@@ -1,6 +1,6 @@
 # Use the official Golang image to create a build artifact.
 # This is the build stage.
-FROM golang:1.19 AS build
+FROM golang:1.23-alpine AS build
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -15,16 +15,16 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o example ./backend/example.go
+RUN CGO_ENABLED=0 GDOS=linux go build -o server server.go
 
 # Start a new stage from scratch
 FROM debian:bullseye-slim
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=build /app/example /app/example
+COPY --from=build /app/server /app/server
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 # Command to run the executable
-CMD ["/app/example"]
+CMD ["/app/server"]
