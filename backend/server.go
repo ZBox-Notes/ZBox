@@ -2,7 +2,7 @@ package main
 
 import (
 	"backend/api/users"
-	database "backend/db"
+	database "backend/db/postgres"
 	model "backend/models/generated_model"
 	"context"
 	"log"
