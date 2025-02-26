@@ -4,10 +4,11 @@
 
 ### Backend Setup
 
-Start the app using the following commands
+Create a `.env` file in the `backend` directory and copy the contents of `backend/.env.example` to the file, replacing the sample values with your desired values. If defaults are set in the `.env.example` file, you can leave them as is.
 
 ```bash
 cd backend
+docker-compose up
 ```
 
 ### Frontend Setup (Node.js 18+ required)
