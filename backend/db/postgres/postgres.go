@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/pashagolub/pgxmock/v4"
 )
 
 type Postgres struct {
@@ -24,4 +25,12 @@ func NewPostgres() (*Postgres, error) {
 		return nil, err
 	}
 	return &Postgres{DB: db}, nil
+}
+
+func NewMockPostgres() (*Postgres, error) {
+	mock, err := pgxmock.NewConn()
+	if err != nil {
+		return nil, err
+	}
+	return &Postgres{DB: mock.Conn()}, nil
 }

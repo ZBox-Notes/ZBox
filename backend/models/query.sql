@@ -13,7 +13,7 @@ RETURNING *;
 
 -- name: UpdateUser :one
 UPDATE users
-SET email = $2, full_name = $3
+SET email = $2, full_name = $3, updated_at = NOW()
 WHERE id = $1
 RETURNING *;
 
@@ -36,7 +36,7 @@ RETURNING *;
 
 -- name: UpdateNote :one
 UPDATE notes
-SET user_id = $2, title = $3, content = $4
+SET user_id = $2, title = $3, content = $4, updated_at = NOW()
 WHERE id = $1
 RETURNING *;
 
@@ -59,7 +59,7 @@ RETURNING *;
 
 -- name: UpdateBox :one
 UPDATE boxes
-SET user_id = $2, name = $3
+SET user_id = $2, name = $3, updated_at = NOW()
 WHERE id = $1
 RETURNING *;
 

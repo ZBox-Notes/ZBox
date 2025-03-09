@@ -35,8 +35,8 @@ RETURNING id, user_id, name, created_at, updated_at
 `
 
 type CreateBoxParams struct {
-	UserID int32
-	Name   string
+	UserID int32  `json:"user_id"`
+	Name   string `json:"name"`
 }
 
 func (q *Queries) CreateBox(ctx context.Context, arg CreateBoxParams) (Box, error) {
@@ -59,9 +59,9 @@ RETURNING id, user_id, title, content, keep_in_inbox, created_at
 `
 
 type CreateNoteParams struct {
-	UserID  int32
-	Title   string
-	Content string
+	UserID  int32  `json:"user_id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
 }
 
 func (q *Queries) CreateNote(ctx context.Context, arg CreateNoteParams) (Note, error) {
@@ -85,8 +85,8 @@ RETURNING note_id, box_id, created_at
 `
 
 type CreateNotesBoxParams struct {
-	NoteID int32
-	BoxID  int32
+	NoteID int32 `json:"note_id"`
+	BoxID  int32 `json:"box_id"`
 }
 
 func (q *Queries) CreateNotesBox(ctx context.Context, arg CreateNotesBoxParams) (NotesBox, error) {
@@ -103,8 +103,8 @@ RETURNING id, email, full_name, is_active, created_at, updated_at
 `
 
 type CreateUserParams struct {
-	Email    string
-	FullName string
+	Email    string `json:"email"`
+	FullName string `json:"full_name"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -147,8 +147,8 @@ WHERE note_id = $1 AND box_id = $2
 `
 
 type DeleteNotesBoxParams struct {
-	NoteID int32
-	BoxID  int32
+	NoteID int32 `json:"note_id"`
+	BoxID  int32 `json:"box_id"`
 }
 
 func (q *Queries) DeleteNotesBox(ctx context.Context, arg DeleteNotesBoxParams) error {
@@ -354,15 +354,15 @@ func (q *Queries) NotesBoxesByNoteId(ctx context.Context, noteID int32) ([]Notes
 
 const updateBox = `-- name: UpdateBox :one
 UPDATE boxes
-SET user_id = $2, name = $3
+SET user_id = $2, name = $3, updated_at = NOW()
 WHERE id = $1
 RETURNING id, user_id, name, created_at, updated_at
 `
 
 type UpdateBoxParams struct {
-	ID     int32
-	UserID int32
-	Name   string
+	ID     int32  `json:"id"`
+	UserID int32  `json:"user_id"`
+	Name   string `json:"name"`
 }
 
 func (q *Queries) UpdateBox(ctx context.Context, arg UpdateBoxParams) (Box, error) {
@@ -380,16 +380,16 @@ func (q *Queries) UpdateBox(ctx context.Context, arg UpdateBoxParams) (Box, erro
 
 const updateNote = `-- name: UpdateNote :one
 UPDATE notes
-SET user_id = $2, title = $3, content = $4
+SET user_id = $2, title = $3, content = $4, updated_at = NOW()
 WHERE id = $1
 RETURNING id, user_id, title, content, keep_in_inbox, created_at
 `
 
 type UpdateNoteParams struct {
-	ID      int32
-	UserID  int32
-	Title   string
-	Content string
+	ID      int32  `json:"id"`
+	UserID  int32  `json:"user_id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
 }
 
 func (q *Queries) UpdateNote(ctx context.Context, arg UpdateNoteParams) (Note, error) {
@@ -413,15 +413,15 @@ func (q *Queries) UpdateNote(ctx context.Context, arg UpdateNoteParams) (Note, e
 
 const updateUser = `-- name: UpdateUser :one
 UPDATE users
-SET email = $2, full_name = $3
+SET email = $2, full_name = $3, updated_at = NOW()
 WHERE id = $1
 RETURNING id, email, full_name, is_active, created_at, updated_at
 `
 
 type UpdateUserParams struct {
-	ID       int32
-	Email    string
-	FullName string
+	ID       int32  `json:"id"`
+	Email    string `json:"email"`
+	FullName string `json:"full_name"`
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {

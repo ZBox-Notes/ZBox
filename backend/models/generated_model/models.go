@@ -9,33 +9,33 @@ import (
 )
 
 type Box struct {
-	ID        int32
-	UserID    int32
-	Name      string
-	CreatedAt pgtype.Timestamp
-	UpdatedAt pgtype.Timestamp
+	ID        int32            `json:"id"`
+	UserID    int32            `json:"user_id"`
+	Name      string           `json:"name"`
+	CreatedAt pgtype.Timestamp `json:"created_at"`
+	UpdatedAt pgtype.Timestamp `json:"updated_at"`
 }
 
 type Note struct {
-	ID          int32
-	UserID      int32
-	Title       string
-	Content     string
-	KeepInInbox bool
-	CreatedAt   pgtype.Timestamp
+	ID          int32            `json:"id"`
+	UserID      int32            `json:"user_id"`
+	Title       string           `json:"title"`
+	Content     string           `json:"content"`
+	KeepInInbox bool             `json:"keep_in_inbox"`
+	CreatedAt   pgtype.Timestamp `json:"created_at"`
 }
 
 type NotesBox struct {
-	NoteID    int32
-	BoxID     int32
-	CreatedAt pgtype.Timestamp
+	NoteID    int32            `json:"note_id"`
+	BoxID     int32            `json:"box_id"`
+	CreatedAt pgtype.Timestamp `json:"created_at"`
 }
 
 type User struct {
-	ID        int32
-	Email     string
-	FullName  string
-	IsActive  bool
-	CreatedAt pgtype.Timestamp
-	UpdatedAt pgtype.Timestamp
+	ID        int32            `json:"id"`
+	Email     string           `json:"email"`
+	FullName  string           `json:"full_name"`
+	IsActive  bool             `json:"is_active"`
+	CreatedAt pgtype.Timestamp `json:"created_at"`
+	UpdatedAt pgtype.Timestamp `json:"updated_at"`
 }

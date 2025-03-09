@@ -24,10 +24,13 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./backend/db/postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./backend/models/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
       interval: 5s
       timeout: 5s
       retries: 5
+
+volumes:
+  postgres_data:

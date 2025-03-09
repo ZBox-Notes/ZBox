@@ -14,7 +14,7 @@ POST http://localhost:{{PORT}}/users
 Content-Type: application/json
 
 {
-  "fullName": "Alice",
+  "full_name": "A",
   "email": "alice@email.com"
 }
 
@@ -37,7 +37,7 @@ GET http://localhost:{{PORT}}/users
 GET http://localhost:{{PORT}}/users/2
 
 ### Update user by ID
-PUT http://localhost:{{PORT}}/users/2
+PUT http://localhost:{{PORT}}/users/4
 Content-Type: application/json
 
 {
