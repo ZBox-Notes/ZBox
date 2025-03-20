@@ -5,6 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: ghcr.io/zbox-notes/zbox-backend:latest
     container_name: go_server
     restart: always
     ports:

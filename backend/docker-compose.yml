@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: ghcr.io/zbox-notes/zbox-backend:latest
     container_name: go_server
     ports:
       - "3000:3000"

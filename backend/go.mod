@@ -1,8 +1,6 @@
 module github.com/ZBox-Notes/ZBox/backend
 
-go 1.22.0
-
-toolchain go1.24.0
+go 1.24.0
 
 require github.com/jackc/pgx/v5 v5.7.2
 
