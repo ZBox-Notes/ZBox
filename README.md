@@ -31,4 +31,4 @@ npm run dev
 The application will be available at:
 
 - Frontend: http://localhost:5173
-- Backend:
+- Backend: https://localhost:3000
