@@ -1,12 +1,13 @@
 package notes
 
 import (
-	"backend/middleware"
-	models "backend/models/generated_model"
 	"encoding/json"
 	"log/slog"
 	"net/http"
 	"strconv"
+
+	"github.com/ZBox-Notes/ZBox/backend/middleware"
+	models "github.com/ZBox-Notes/ZBox/backend/models/generated_model"
 
 	"github.com/gorilla/mux"
 )

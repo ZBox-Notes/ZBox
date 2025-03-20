@@ -1,9 +1,10 @@
 package middleware_test
 
 import (
-	model "backend/models/generated_model"
 	"context"
 	"testing"
+
+	model "github.com/ZBox-Notes/ZBox/backend/models/generated_model"
 
 	"github.com/pashagolub/pgxmock/v4"
 )

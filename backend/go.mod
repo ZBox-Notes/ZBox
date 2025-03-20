@@ -1,4 +1,4 @@
-module backend
+module github.com/ZBox-Notes/ZBox/backend
 
 go 1.22.0
 

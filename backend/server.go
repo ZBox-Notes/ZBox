@@ -1,16 +1,17 @@
 package main
 
 import (
-	"backend/api/boxes"
-	"backend/api/notes"
-	notesboxes "backend/api/notes_boxes"
-	"backend/api/users"
-	database "backend/db/postgres"
-	middleware "backend/middleware"
-	model "backend/models/generated_model"
 	"context"
 	"log/slog"
 	"net/http"
+
+	"github.com/ZBox-Notes/ZBox/backend/api/boxes"
+	"github.com/ZBox-Notes/ZBox/backend/api/notes"
+	notesboxes "github.com/ZBox-Notes/ZBox/backend/api/notes_boxes"
+	"github.com/ZBox-Notes/ZBox/backend/api/users"
+	database "github.com/ZBox-Notes/ZBox/backend/db/postgres"
+	middleware "github.com/ZBox-Notes/ZBox/backend/middleware"
+	model "github.com/ZBox-Notes/ZBox/backend/models/generated_model"
 
 	"github.com/gorilla/mux"
 )
