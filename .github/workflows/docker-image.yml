@@ -13,4 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the backend Docker image
-      run: docker build ./backend --file Dockerfile --tag zbox-backend:$(date +%s)
+      run: 
+        docker build ./backend/ --file Dockerfile --tag zbox-backend:$(date +%s)
