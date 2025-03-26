@@ -104,7 +104,7 @@ func NoteValidatorMiddleware(next http.Handler) http.Handler {
 
 			if contentInter, ok := requestBody["content"]; ok {
 				content := contentInter.(string)
-				if len(content) < NOTE_CONTENT_MAX_LENGTH {
+				if len(content) > NOTE_CONTENT_MAX_LENGTH {
 					slog.Error(fmt.Sprintln("content must be at most", NOTE_CONTENT_MAX_LENGTH, "characters long"))
 					http.Error(w, fmt.Sprintln("content must be at most", NOTE_CONTENT_MAX_LENGTH, "characters long"), http.StatusBadRequest)
 					return

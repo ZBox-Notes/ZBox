@@ -56,3 +56,27 @@ GET http://localhost:{{PORT}}/users
 
 ### Delete last user
 DELETE http://localhost:{{PORT}}/users/3
+
+
+### Get all notes
+GET http://localhost:{{PORT}}/notes
+
+### Post a note
+POST http://localhost:{{PORT}}/notes
+Content-Type: "application/json"
+
+{
+  "user_id": 1,
+  "title": "Test",
+  "content": "dear diary"
+}
+
+
+### Post a box
+POST http://localhost:3000/boxes
+Content-Type: "application/json"
+
+{
+  "user_id": 1,
+  "name": "My favorite box"
+}

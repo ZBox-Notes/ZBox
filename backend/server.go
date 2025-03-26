@@ -14,6 +14,7 @@ import (
 	model "github.com/ZBox-Notes/ZBox/backend/models/generated_model"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -47,12 +48,15 @@ func main() {
 
 	// Add middleware
 	slog.Info("Adding middleware...")
+
 	r.Use(middleware.LoggingMiddleware)
 	r.Use(middleware.AuthMiddleware)
 
 	// Start the server
+	c := cors.AllowAll()
+	handler := c.Handler(r)
 	slog.Info("Server started successfully")
-	http.Handle("/", r)
+	http.Handle("/", handler)
 	http.ListenAndServe(":3000", nil)
 }
 

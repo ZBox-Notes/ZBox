@@ -11,7 +11,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
 } from "@/components/ui/sidebar"
-import { Archive, House, StickyNote, User } from "lucide-react"
+import { Archive, House, Settings, StickyNote, User } from "lucide-react"
 
 export function AppSidebar() {
     return (
@@ -63,10 +63,11 @@ export function AppSidebar() {
             </SidebarContent>
             <SidebarFooter className="px-4 py-2">
                 <div className="flex px-4 py-2 items-start justify-left rounded-(--radius-md) bg-white w-full outline outline-solid outline-sidebar-border">
-                    <User />
+                    <User strokeWidth={1} />
                     <h3 className="mx-auto">
                         David René
                     </h3>
+                    <Settings strokeWidth={1} />
                 </div>
             </SidebarFooter>
         </Sidebar>
