@@ -27,7 +27,7 @@ export function AppSidebar() {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             <SidebarMenuItem key={"home"}>
-                                <SidebarMenuButton asChild className="hover:bg-gray-100">
+                                <SidebarMenuButton asChild className="">
                                     <a href="/">
                                         <House />
                                         Home
@@ -35,7 +35,7 @@ export function AppSidebar() {
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem key={"notes"}>
-                                <SidebarMenuButton asChild className="hover:bg-gray-100">
+                                <SidebarMenuButton asChild className="">
                                     <a href="/notes">
                                         <StickyNote />
                                         Notes
@@ -43,7 +43,7 @@ export function AppSidebar() {
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem key={"boxes"}>
-                                <SidebarMenuButton asChild className="hover:bg-gray-100">
+                                <SidebarMenuButton asChild className="">
                                     <a href="/boxes">
                                         <Archive />
                                         Boxes

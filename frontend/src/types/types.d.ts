@@ -15,8 +15,17 @@ export type Box = {
     updated_at: string
 }
 
+export type QuoteResponse = {
+    quote: Quote
+}
+
 export type Quote = {
-    q: string,
-    a: string
+    id: string,
+    content: string
+    author: QuoteAuthor
+}
+
+export type QuoteAuthor = {
+    name: string
 }
 

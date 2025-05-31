@@ -1,18 +1,11 @@
-import { Quote } from "@/types/types";
-import { useQuery } from "@tanstack/react-query";
+import { QuoteResponse } from "@/types/types";
 import axios from "axios";
 
-const QUOTE_API_URL = "https://zenquotes.io/api/today";
+const QUOTE_API_URL = "https://api.quotable.kurokeita.dev/api/quotes/random";
 
-export const getQOTD = (): Promise<Quote> => {
+export const getQOTD = (): Promise<QuoteResponse> => {
     return axios.get(QUOTE_API_URL).then((response) => {
-        let quote: Quote[] = response.data;
-        return quote[0]
+        let quote: QuoteResponse = response.data;
+        return quote
     })
 }
-
-export const useQOTD = () =>
-    useQuery({
-        queryKey: ["qotd"],
-        queryFn: getQOTD
-    })

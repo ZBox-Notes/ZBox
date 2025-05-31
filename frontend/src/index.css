@@ -76,7 +76,10 @@ body {
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2em;
 }
 
 button {
@@ -98,6 +101,25 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.binding-border {
+  position: relative;
+}
+
+.binding-border::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -6px;
+  width: 10px;
+  height: 90%;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      transparent 90%,
+      var(--primary) 90%,
+      var(--primary) 100%);
+  background-size: 4px 10px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -196,3 +218,13 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+.text-limit-5 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-limit[data-lines] {}

@@ -7,8 +7,8 @@ export default function Layout() {
     return (
         <SidebarProvider>
             <AppSidebar />
-            <SidebarTrigger className="my-4 mx-4" />
-            <main className="w-full px-8 py-4">
+            <main className="w-full px-8 py-4 mt-4">
+                <SidebarTrigger className="outline outline-solid outline-sidebar-border" />
                 <Outlet />
             </main>
         </SidebarProvider>
